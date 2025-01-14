@@ -57,6 +57,9 @@ def main_hydra(kwargs: DictConfig):
 
 
 def main(**kwargs):
+    import os
+
+    os.environ["USE_LIBUV"] = "0"
 
     # set random seed
     set_all_random_seed(kwargs.get("seed", 0))
@@ -82,8 +85,7 @@ def main(**kwargs):
     elif use_ddp or use_fsdp:
         logging.info(f"use_ddp: {use_ddp}, use_fsdp: {use_fsdp}")
         dist.init_process_group(
-            backend=kwargs.get("backend", "nccl"),
-            init_method="env://",
+            backend=kwargs.get("backend", "nccl"), init_method="env://?use_libuv=0"
         )
         torch.cuda.set_device(local_rank)
 

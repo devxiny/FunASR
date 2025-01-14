@@ -4,7 +4,7 @@
 workspace=`pwd`
 
 # which gpu to train or finetune
-export CUDA_VISIBLE_DEVICES="0,1"
+export CUDA_VISIBLE_DEVICES="0"
 gpu_num=$(echo $CUDA_VISIBLE_DEVICES | awk -F "," '{print NF}')
 
 # model_name from model_hub, or model_dir in local path
@@ -20,21 +20,21 @@ model_name_or_model_dir="iic/speech_seaco_paraformer_large_asr_nat-zh-cn-16k-com
 
 
 # data dir, which contains: train.json, val.json
-data_dir="../../../data/list"
+data_dir="dataset"
 
 train_data="${data_dir}/train.jsonl"
 val_data="${data_dir}/val.jsonl"
 
 # generate train.jsonl and val.jsonl from wav.scp and text.txt
-scp2jsonl \
-++scp_file_list='["../../../data/list/train_wav.scp", "../../../data/list/train_text.txt"]' \
-++data_type_list='["source", "target"]' \
-++jsonl_file_out="${train_data}"
+# scp2jsonl \
+# ++scp_file_list='["../../../data/list/train_wav.scp", "../../../data/list/train_text.txt"]' \
+# ++data_type_list='["source", "target"]' \
+# ++jsonl_file_out="${train_data}"
 
-scp2jsonl \
-++scp_file_list='["../../../data/list/val_wav.scp", "../../../data/list/val_text.txt"]' \
-++data_type_list='["source", "target"]' \
-++jsonl_file_out="${val_data}"
+# scp2jsonl \
+# ++scp_file_list='["../../../data/list/val_wav.scp", "../../../data/list/val_text.txt"]' \
+# ++data_type_list='["source", "target"]' \
+# ++jsonl_file_out="${val_data}"
 
 
 # exp output dir
